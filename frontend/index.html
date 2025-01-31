@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Inventory</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Home Inventory</h1>
+    <form id="itemForm">
+        <input type="text" id="name" placeholder="Item Name" required>
+        <input type="number" step="0.01" id="quantity" placeholder="Quantity" required>
+        <input type="text" id="measurement_unit" placeholder="Measurement Unit (e.g., Kg, units, ml)" required>
+        <input type="number" step="0.01" id="threshold" placeholder="Low Quantity Threshold" required>
+        <input type="date" id="expiration_date" placeholder="Expiration Date">
+        <button type="submit">Add Item</button>
+    </form>
+    <table id="itemsTable">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Measurement Unit</th>
+                <th>Expiration Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="items"></tbody>
+    </table>
+    <script src="app.js"></script>
+</body>
+</html>
