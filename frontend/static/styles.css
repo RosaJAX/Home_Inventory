@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+#newItemFormContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+
+#itemForm, #shoppingList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+form, #loginForm, #registerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+input, button {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+.red {
+    background-color: red;
+    color: black;
+}
+
+.yellow {
+    background-color: yellow;
+    color: black;
+}
+
+.white {
+    background-color: white;
+    color: black;
+}
+
+table td input[type="number"] {
+    width: auto;
+    max-width: 60px;
+}
+
+.date-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.date-container input[type="date"] {
+    flex: 1;
+}
+
+.calendar-icon {
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    font-size: 1.2em;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+        text-align: left;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    #itemForm, #shoppingList {
+        width: 100%;
+        max-width: none;
+    }
+
+    form, #loginForm, #registerForm {
+        width: 100%;
+        max-width: none;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 5px;
+    }
+
+    input, button {
+        width: 100%;
+    }
+}
