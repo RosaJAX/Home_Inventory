@@ -42,16 +42,30 @@ def manage_items():
     if request.method == 'POST':
         item = request.json
         try:
-            if 'expiration_date' in item and item['expiration_date']:
-                item['expiration_date'] = datetime.strptime(item['expiration_date'], '%Y-%m-%d')
+            existing_item = items_collection.find_one({'name': item['name']})
+            if existing_item:
+                new_quantity = existing_item['quantity'] + item['quantity']
+                items_collection.update_one(
+                    {'name': item['name']},
+                    {'$set': {'quantity': new_quantity, 'expiration_date': item['expiration_date']}}
+                )
+                return jsonify({"msg": "Item updated!"}), 200
             else:
-                item['expiration_date'] = None
-            items_collection.insert_one(item)
-            return jsonify({"msg": "Item added!"}), 201
+                if 'expiration_date' in item and item['expiration_date']:
+                    item['expiration_date'] = datetime.strptime(item['expiration_date'], '%Y-%m-%d')
+                else:
+                    item['expiration_date'] = None
+                items_collection.insert_one(item)
+                return jsonify({"msg": "Item added!"}), 201
         except Exception as e:
             return jsonify({"msg": f"Error: {e}"}), 500
 
-    items = list(items_collection.find({}, {'_id': 0}).sort("name", 1))  # Sorted by item name in alphabetical order
+    items = list(items_collection.find({}, {'_id': 0}).sort("name", 1))
+    return jsonify(items), 200
+
+@app.route('/existing_items', methods=['GET'])
+def get_existing_items():
+    items = list(items_collection.find({}, {'_id': 0, 'name': 1, 'measurement_unit': 1, 'threshold': 1}).sort("name", 1))
     return jsonify(items), 200
 
 

@@ -26,6 +26,7 @@ document.getElementById('login').addEventListener('submit', function(event) {
             document.getElementById('shoppingList').style.display = 'none';
             loadItems();  // Ensure items load after login
             loadShoppingList();
+            loadExistingItems();  // Load existing items for dropdown
         } else {
             console.log(`Login error: ${data.msg}`); // Debugging statement
             loginMessage.textContent = data.msg;
@@ -82,7 +83,7 @@ document.getElementById('itemForm').addEventListener('submit', function(event) {
     const threshold = document.getElementById('threshold').value;
     const expiration_date = document.getElementById('expiration_date').value;
 
-    fetch('http://10.0.0.89:5000/items', {  // Make sure the URL uses the laptop's IP
+    fetch('http://10.0.0.89:5000/items', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -90,7 +91,7 @@ document.getElementById('itemForm').addEventListener('submit', function(event) {
         body: JSON.stringify({ name, quantity: parseFloat(quantity), measurement_unit, threshold: parseFloat(threshold), expiration_date })
     })
     .then(response => {
-        console.log(`Response status: ${response.status}`); // Debugging statement
+        console.log(`Response status: ${response.status}`);
         return response.json();
     })
     .then(data => {
@@ -98,8 +99,9 @@ document.getElementById('itemForm').addEventListener('submit', function(event) {
         clearForm();
         loadItems();
         loadShoppingList();
+        loadExistingItems();  // Reload existing items for dropdown
     })
-    .catch(error => console.error(`Error: ${error}`)); // Debugging statement
+    .catch(error => console.error(`Error: ${error}`));
 });
 
 function clearForm() {
@@ -111,14 +113,9 @@ function clearForm() {
 }
 
 function loadItems() {
-    fetch('http://10.0.0.89:5000/items', {  // Make sure the URL uses the laptop's IP
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    fetch('http://10.0.0.89:5000/items')
     .then(response => {
-        console.log(`Response status: ${response.status}`); // Debugging statement
+        console.log(`Response status: ${response.status}`);
         return response.json();
     })
     .then(items => {
@@ -126,18 +123,16 @@ function loadItems() {
         itemsTableBody.innerHTML = '';
         items.forEach(item => {
             const row = document.createElement('tr');
-            console.log(`Item: ${item.name}, Quantity: ${item.quantity}, Threshold: ${item.threshold}`); // Debugging statement
+            console.log(`Item: ${item.name}, Quantity: ${item.quantity}, Threshold: ${item.threshold}`);
 
             let rowClass = 'white';
 
-            // Check quantity threshold
             if (item.quantity <= 0) {
                 rowClass = 'red';
             } else if (item.quantity <= item.threshold) {
                 rowClass = 'yellow';
             }
 
-            // Check expiration date
             if (item.expiration_date) {
                 const today = new Date();
                 const expirationDate = new Date(item.expiration_date);
@@ -163,18 +158,13 @@ function loadItems() {
             itemsTableBody.appendChild(row);
         });
     })
-    .catch(error => console.error(`Error: ${error}`)); // Debugging statement
+    .catch(error => console.error(`Error: ${error}`));
 }
 
 function loadShoppingList() {
-    fetch('http://10.0.0.89:5000/shopping_list', {  // Make sure the URL uses the laptop's IP
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
+    fetch('http://10.0.0.89:5000/shopping_list')
     .then(response => {
-        console.log(`Response status: ${response.status}`); // Debugging statement
+        console.log(`Response status: ${response.status}`);
         return response.json();
     })
     .then(items => {
@@ -190,11 +180,11 @@ function loadShoppingList() {
             shoppingItemsTable.appendChild(row);
         });
     })
-    .catch(error => console.error(`Error: ${error}`)); // Debugging statement
+    .catch(error => console.error(`Error: ${error}`));
 }
 
 function updateQuantity(name, newQuantity) {
-    fetch('http://10.0.0.89:5000/items/update', {  // Make sure the URL uses the laptop's IP
+    fetch('http://10.0.0.89:5000/items/update', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -202,7 +192,7 @@ function updateQuantity(name, newQuantity) {
         body: JSON.stringify({ name, quantity: parseFloat(newQuantity) })
     })
     .then(response => {
-        console.log(`Response status: ${response.status}`); // Debugging statement
+        console.log(`Response status: ${response.status}`);
         return response.json();
     })
     .then(data => {
@@ -210,11 +200,11 @@ function updateQuantity(name, newQuantity) {
         loadItems();
         loadShoppingList();
     })
-    .catch(error => console.error(`Error: ${error}`)); // Debugging statement
+    .catch(error => console.error(`Error: ${error}`));
 }
 
 function deleteItem(name) {
-    fetch('http://10.0.0.89:5000/items/delete', {  // Make sure the URL uses the laptop's IP
+    fetch('http://10.0.0.89:5000/items/delete', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -222,7 +212,7 @@ function deleteItem(name) {
         body: JSON.stringify({ name })
     })
     .then(response => {
-        console.log(`Response status: ${response.status}`); // Debugging statement
+        console.log(`Response status: ${response.status}`);
         return response.json();
     })
     .then(data => {
@@ -230,7 +220,7 @@ function deleteItem(name) {
         loadItems();
         loadShoppingList();
     })
-    .catch(error => console.error(`Error: ${error}`)); // Debugging statement
+    .catch(error => console.error(`Error: ${error}`));
 }
 
 function toggleItem(name, checked) {
@@ -241,6 +231,7 @@ function showItemList() {
     document.getElementById('shoppingList').style.display = 'none';
     document.getElementById('itemForm').style.display = 'block';
     loadItems();
+    loadExistingItems();  // Load existing items for dropdown
 }
 
 function showShoppingList() {
@@ -264,5 +255,33 @@ function checkLoginStatus() {
     document.getElementById('itemForm').style.display = 'none';
     document.getElementById('shoppingList').style.display = 'none';
 }
+
+function loadExistingItems() {
+    fetch('http://10.0.0.89:5000/existing_items')
+    .then(response => response.json())
+    .then(items => {
+        const datalist = document.getElementById('existingItems');
+        datalist.innerHTML = '';
+        items.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.name;
+            option.setAttribute('data-unit', item.measurement_unit);
+            option.setAttribute('data-threshold', item.threshold);
+            datalist.appendChild(option);
+        });
+    })
+    .catch(error => console.error(`Error: ${error}`));
+}
+
+document.getElementById('name').addEventListener('input', function() {
+    const selectedItem = this.value;
+    const options = document.querySelectorAll('#existingItems option');
+    options.forEach(option => {
+        if (option.value === selectedItem) {
+            document.getElementById('measurement_unit').value = option.getAttribute('data-unit');
+            document.getElementById('threshold').value = option.getAttribute('data-threshold');
+        }
+    });
+});
 
 checkLoginStatus();

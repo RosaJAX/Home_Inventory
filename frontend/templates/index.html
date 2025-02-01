@@ -37,9 +37,14 @@
     <div id="itemForm" style="display: none;">
         <div id="newItemFormContainer">
             <form>
-                <input type="text" id="name" placeholder="Item Name" required>
+                <label for="name">Item Name:</label>
+                <input list="existingItems" id="name" placeholder="Item Name" required>
+                <datalist id="existingItems"></datalist>
+                <label for="quantity">Quantity:</label>
                 <input type="number" step="0.01" id="quantity" placeholder="Quantity" required>
+                <label for="measurement_unit">Measurement Unit:</label>
                 <input type="text" id="measurement_unit" placeholder="Measurement Unit (e.g., Kg, units, ml)" required>
+                <label for="threshold">Low Quantity Threshold:</label>
                 <input type="number" step="0.01" id="threshold" placeholder="Low Quantity Threshold" required>
                 <label for="expiration_date">Expiration Date:</label> <!-- Added label -->
                 <div class="date-container">
