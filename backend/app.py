@@ -8,7 +8,7 @@ app = Flask(__name__, static_folder="../frontend/static", template_folder="../fr
 CORS(app)
 
 client = MongoClient("mongodb://localhost:27017/")
-db = client.Home_Inventory  # Ensure consistent case
+db = client.Home_Inventory 
 items_collection = db.items
 users_collection = db.users
 

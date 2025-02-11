@@ -8,7 +8,7 @@
 <body>
     <h1>Home Inventory</h1>
 
-    <!-- Login Form -->
+    <!-- Login  -->
     <div id="loginForm">
         <h2>Login</h2>
         <form id="login">
@@ -16,11 +16,11 @@
             <input type="password" id="loginPassword" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
-        <p id="loginMessage"></p> <!-- Message container -->
+        <p id="loginMessage"></p> 
         <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register here</a></p>
     </div>
 
-    <!-- Registration Form -->
+    <!-- Registration -->
     <div id="registerForm" style="display: none;">
         <h2>Register</h2>
         <form id="register">
@@ -29,11 +29,11 @@
             <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
             <button type="submit">Register</button>
         </form>
-        <p id="registerMessage"></p> <!-- Message container -->
+        <p id="registerMessage"></p> 
         <p>Already have an account? <a href="#" onclick="showLoginForm()">Login here</a></p>
     </div>
 
-    <!-- Item Form -->
+    <!-- Item -->
     <div id="itemForm" style="display: none;">
         <div id="newItemFormContainer">
             <form>
@@ -46,10 +46,10 @@
                 <input type="text" id="measurement_unit" placeholder="Measurement Unit (e.g., Kg, units, ml)" required>
                 <label for="threshold">Low Quantity Threshold:</label>
                 <input type="number" step="0.01" id="threshold" placeholder="Low Quantity Threshold" required>
-                <label for="expiration_date">Expiration Date:</label> <!-- Added label -->
+                <label for="expiration_date">Expiration Date:</label> 
                 <div class="date-container">
                     <input type="date" id="expiration_date" placeholder="Expiration Date">
-                    <span class="calendar-icon">📅</span> <!-- Added calendar icon -->
+                    <span class="calendar-icon">📅</span> 
                 </div>
                 <button type="submit">Add Item</button>
             </form>

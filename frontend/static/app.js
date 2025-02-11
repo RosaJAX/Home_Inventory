@@ -4,9 +4,9 @@ document.getElementById('login').addEventListener('submit', function(event) {
     const username = document.getElementById('loginUsername').value;
     const password = document.getElementById('loginPassword').value;
 
-    console.log(`Login attempt: ${username}, ${password}`); // Debugging statement
+    console.log(`Login attempt: ${username}, ${password}`); 
 
-    fetch('http://10.0.0.89:5000/login', {  // Make sure the URL uses the laptop's IP
+    fetch('http://10.0.0.89:5000/login', {  
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -14,25 +14,25 @@ document.getElementById('login').addEventListener('submit', function(event) {
         body: JSON.stringify({ username, password })
     })
     .then(response => {
-        console.log(`Response status: ${response.status}`); // Debugging statement
+        console.log(`Response status: ${response.status}`); 
         return response.json()
     })
     .then(data => {
         const loginMessage = document.getElementById('loginMessage');
         if (data.msg === "Login successful!") {
-            console.log('Login successful'); // Debugging statement
+            console.log('Login successful'); 
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('itemForm').style.display = 'block';
             document.getElementById('shoppingList').style.display = 'none';
-            loadItems();  // Ensure items load after login
+            loadItems(); 
             loadShoppingList();
-            loadExistingItems();  // Load existing items for dropdown
+            loadExistingItems(); 
         } else {
-            console.log(`Login error: ${data.msg}`); // Debugging statement
+            console.log(`Login error: ${data.msg}`); 
             loginMessage.textContent = data.msg;
         }
     })
-    .catch(error => console.error(`Error: ${error}`)); // Debugging statement
+    .catch(error => console.error(`Error: ${error}`)); 
 });
 
 document.getElementById('register').addEventListener('submit', function(event) {
@@ -48,9 +48,9 @@ document.getElementById('register').addEventListener('submit', function(event) {
         return;
     }
 
-    console.log(`Register attempt: ${username}, ${password}`); // Debugging statement
+    console.log(`Register attempt: ${username}, ${password}`); 
 
-    fetch('http://10.0.0.89:5000/register', {  // Make sure the URL uses the laptop's IP
+    fetch('http://10.0.0.89:5000/register', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -58,20 +58,20 @@ document.getElementById('register').addEventListener('submit', function(event) {
         body: JSON.stringify({ username, password })
     })
     .then(response => {
-        console.log(`Response status: ${response.status}`); // Debugging statement
+        console.log(`Response status: ${response.status}`);
         return response.json();
     })
     .then(data => {
         if (data.msg === "User registered!") {
-            console.log('Registration successful'); // Debugging statement
+            console.log('Registration successful');
             showLoginForm();
             registerMessage.textContent = "Registration successful! Please log in.";
         } else {
-            console.log(`Registration error: ${data.msg}`); // Debugging statement
+            console.log(`Registration error: ${data.msg}`);
             registerMessage.textContent = data.msg;
         }
     })
-    .catch(error => console.error(`Error: ${error}`)); // Debugging statement
+    .catch(error => console.error(`Error: ${error}`));
 });
 
 document.getElementById('itemForm').addEventListener('submit', function(event) {
@@ -99,7 +99,7 @@ document.getElementById('itemForm').addEventListener('submit', function(event) {
         clearForm();
         loadItems();
         loadShoppingList();
-        loadExistingItems();  // Reload existing items for dropdown
+        loadExistingItems();
     })
     .catch(error => console.error(`Error: ${error}`));
 });
@@ -231,7 +231,7 @@ function showItemList() {
     document.getElementById('shoppingList').style.display = 'none';
     document.getElementById('itemForm').style.display = 'block';
     loadItems();
-    loadExistingItems();  // Load existing items for dropdown
+    loadExistingItems(); 
 }
 
 function showShoppingList() {
